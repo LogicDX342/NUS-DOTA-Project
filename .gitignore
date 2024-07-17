@@ -1,0 +1,6 @@
+build
+LiME/src/*.o
+LiME/src/*.ko
+LiME/src/*.symvers
+LiME/src/*.order
+LiME/src/*.mod
