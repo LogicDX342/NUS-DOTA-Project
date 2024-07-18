@@ -12,12 +12,16 @@
 #define TASK_COMM_LEN	 16
 #define MAX_FILENAME_LEN 127
 
+#define TYPE_BPF 0
+#define TYPE_INSMOD 1
+
 struct event {
 	int pid;
 	int ppid;
 	char comm[TASK_COMM_LEN];
 	char filename[MAX_FILENAME_LEN];
     bool waiting_for_password;
+	int type;
     bool authroized;
 };
 

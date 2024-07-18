@@ -152,7 +152,6 @@ static int handle_event(void *ctx, void *data, size_t data_sz)
 	if (!fs_strings) {
 		fprintf(stderr, ANSI_COLOR_RED
 			"Cannot find BPF hooks in the executable\n" ANSI_COLOR_RESET);
-		free(exe_path);
 	}
 	printf("Found %d BPF hooks in the executable:\n", count);
 	for (int i = 0; i < count; i++) {
