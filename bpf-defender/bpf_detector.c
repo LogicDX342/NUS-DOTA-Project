@@ -95,7 +95,7 @@ void check_syscall_addresses(unsigned long text_start, unsigned long text_end,st
             if (syscall_addr >= text_start && syscall_addr <= text_end) {
                 printf("Syscall %d address %lx is in the text segment\n", i, syscall_addr);
             } else {
-                printf(" WARNING!! Syscall %d address %lx is NOT in the text segment\n", i, syscall_addr);
+                printf(" WARNING!! Syscall %d address %lx is NOT in the .text segment\n", i, syscall_addr);
             }
         }
     }
