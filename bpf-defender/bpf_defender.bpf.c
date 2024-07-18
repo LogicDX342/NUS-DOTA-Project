@@ -121,23 +121,43 @@ int handle_kill(struct trace_event_raw_sys_enter *ctx)
 	return 0;
 }
 
+static struct event *get_event(pid_t pid)
+{
+	struct event *e = bpf_map_lookup_elem(&proc_map, &pid);
+	if (!e) {
+		bpf_printk("Failed to lookup process map\n");
+		return NULL;
+	}
+	return e;
+}
+
+SEC("tp/syscalls/sys_enter_finit_module")
+int handle_finit_module(struct trace_event_raw_sys_enter *ctx)
+{
+	struct event *e = get_event(bpf_get_current_pid_tgid() >> 32);
+	if (!e || e->authroized) {
+		return 0;
+	}
+	bpf_ringbuf_output(&my_ringbuf, e, sizeof(*e), 0);
+
+	e->waiting_for_password = true;
+	bpf_send_signal(19);
+	unauth_event = e->pid;
+	return 0;
+}
+
 SEC("tp/syscalls/sys_enter_bpf")
-int handle_tp(struct trace_event_raw_sys_enter *ctx)
+int handle_bpf(struct trace_event_raw_sys_enter *ctx)
 {
 	if (ctx->args[0] != BPF_PROG_LOAD) {
 		return 0;
 	}
 
-	pid_t pid = bpf_get_current_pid_tgid() >> 32;
-	struct event *e = bpf_map_lookup_elem(&proc_map, &pid);
-	if (!e) {
-		bpf_printk("Failed to lookup process map\n");
+	struct event *e = get_event(bpf_get_current_pid_tgid() >> 32);
+	if (!e || e->authroized) {
 		return 0;
 	}
 
-	if (e->authroized) {
-		return 0;
-	}
 	bpf_ringbuf_output(&my_ringbuf, e, sizeof(*e), 0);
 
 	e->waiting_for_password = true;
