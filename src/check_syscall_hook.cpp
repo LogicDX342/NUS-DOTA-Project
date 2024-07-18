@@ -93,6 +93,6 @@ int main(int argc, char *argv[])
 
     if (!is_syscall_hook_detected)
     {
-        puts(GRN "No Syscall Table Hooking detected.");
+        puts(GRN "No Syscall Table Hooking detected." RESET);
     }
 }
