@@ -1,4 +1,4 @@
-# Using ebpf to detect and defense rootkit
+# Using eBPF to detect and defense rootkit
 
 ## Install Dependencies
 
