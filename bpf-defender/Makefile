@@ -24,7 +24,7 @@ INCLUDES := -I$(OUTPUT) -I./libbpf/include/uapi -I$(dir $(VMLINUX)) -I$(LIBBLAZE
 CFLAGS := -g -Wall
 ALL_LDFLAGS := $(LDFLAGS) $(EXTRA_LDFLAGS)
 
-APPS = bpf_defender
+APPS = bpf_defender bpf_detector
 
 CARGO ?= $(shell which cargo)
 ifeq ($(strip $(CARGO)),)

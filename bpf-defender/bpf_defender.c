@@ -1,4 +1,4 @@
-#include "mybpf.skel.h"
+#include "bpf_defender.skel.h"
 #include <bpf/libbpf.h>
 #include <bpf/bpf.h>
 #include <stdio.h>
@@ -196,7 +196,7 @@ static int handle_event(void *ctx, void *data, size_t data_sz)
 
 int main()
 {
-	struct mybpf_bpf *skel;
+	struct bpf_defender_bpf *skel;
 	struct ring_buffer *rb = NULL;
 	int rb_fd, err;
 
@@ -204,7 +204,7 @@ int main()
 	libbpf_set_print(libbpf_print_fn);
 
 	/* Open and load BPF application */
-	skel = mybpf_bpf__open_and_load();
+	skel = bpf_defender_bpf__open_and_load();
 	if (!skel) {
 		fprintf(stderr, "Failed to open and load BPF skeleton\n");
 		return 1;
@@ -221,7 +221,7 @@ int main()
 	printf(ANSI_COLOR_GREEN "BPF program is running ...\n" ANSI_COLOR_RESET);
 
 	/* Attach BPF program */
-	err = mybpf_bpf__attach(skel);
+	err = bpf_defender_bpf__attach(skel);
 	if (err) {
 		fprintf(stderr, "Failed to attach BPF skeleton\n");
 		goto cleanup;
@@ -255,6 +255,6 @@ int main()
 
 cleanup:
 	ring_buffer__free(rb);
-	mybpf_bpf__destroy(skel);
+	bpf_defender_bpf__destroy(skel);
 	return err < 0 ? -err : 0;
 }
