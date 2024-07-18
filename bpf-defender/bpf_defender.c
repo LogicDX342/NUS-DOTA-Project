@@ -124,6 +124,8 @@ static int handle_event(void *ctx, void *data, size_t data_sz)
 	if (!e->waiting_for_password) {
 		if (e->authroized) {
 			printf(ANSI_COLOR_GREEN "BPF program is authorized\n" ANSI_COLOR_RESET);
+			printf("\n" ANSI_COLOR_GREEN
+			       "BPF program installation successful.\n" ANSI_COLOR_RESET);
 			kill(e->pid, 18);
 		} else {
 			printf(ANSI_COLOR_RED "BPF program is not authorized\n" ANSI_COLOR_RESET);
@@ -189,7 +191,6 @@ static int handle_event(void *ctx, void *data, size_t data_sz)
 		fprintf(stderr, ANSI_COLOR_RED "Failed to update input map\n" ANSI_COLOR_RESET);
 		return 1;
 	}
-	printf("\n" ANSI_COLOR_GREEN "BPF program installation successful.\n" ANSI_COLOR_RESET);
 	kill(0, 0);
 	return 0;
 }
