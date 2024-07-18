@@ -80,6 +80,7 @@ static int passing_table(struct bpf_detector_bpf *skel){
 
 void check_syscall_addresses(unsigned long text_start, unsigned long text_end,struct bpf_detector_bpf *skel) {
     int map_fd;
+    int warning_counter = 0;
     unsigned long syscall_addr;
     map_fd = bpf_map__fd(skel->maps.syscall_map);
     if (map_fd < 0) {
@@ -95,9 +96,16 @@ void check_syscall_addresses(unsigned long text_start, unsigned long text_end,st
             if (syscall_addr >= text_start && syscall_addr <= text_end) {
                 printf("Syscall %d address %lx is in the text segment\n", i, syscall_addr);
             } else {
-                printf(" WARNING!! Syscall %d address %lx is NOT in the .text segment\n", i, syscall_addr);
+                printf("\x1b[31m""WARNING!! Syscall %d address %lx is NOT in the .text segment!\n.text start at: %lx, end at : %lx\n""\x1b[0m", i, syscall_addr,text_start,text_end);
+                warning_counter++;
             }
         }
+    }
+
+    if (warning_counter == 0){
+        printf("\x1b[34m""Good! Nothing weird is hooked on your syscall table\n""\x1b[0m");
+    }else{
+        printf("\x1b[31m""Syscall table got hooked! Check the output warning!\nLook up /usr/include/asm-generic/unistd.h to see the syscall name\n""\x1b[0m");
     }
     close(map_fd);
 }
@@ -145,7 +153,7 @@ int main(int argc, char **argv)
 	check_syscall_addresses(text_start,text_end,skel);
 	
 	
-	printf(".text start at: %lx, end at : %lx\n", text_start, text_end);
+	// printf(".text start at: %lx, end at : %lx\n", text_start, text_end);
 	return 0;
 
 
