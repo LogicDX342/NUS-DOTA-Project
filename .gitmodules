@@ -4,3 +4,12 @@
 [submodule "LiME"]
 	path = memory_dump_analyzer/LiME
 	url = https://github.com/504ensicsLabs/LiME
+[submodule "bpf-defender/blazesym"]
+	path = bpf-defender/blazesym
+	url = https://github.com/libbpf/blazesym.git
+[submodule "bpf-defender/bpftool"]
+	path = bpf-defender/bpftool
+	url = https://github.com/libbpf/bpftool.git
+[submodule "bpf-defender/libbpf"]
+	path = bpf-defender/libbpf
+	url = https://github.com/libbpf/libbpf.git
