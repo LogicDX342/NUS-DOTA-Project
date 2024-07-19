@@ -103,7 +103,7 @@ void check_syscall_addresses(unsigned long text_start, unsigned long text_end,st
     }
 
     if (warning_counter == 0){
-        printf("\x1b[34m""Good! Nothing weird is hooked on your syscall table\n""\x1b[0m");
+        printf("\x1b[32m""Good! Nothing weird is hooked on your syscall table.\n.text segment start at: %lx, end at : %lx\n""\x1b[0m",text_start,text_end);
     }else{
         printf("\x1b[31m""Syscall table got hooked! Check the output warning!\nLook up /usr/include/asm-generic/unistd.h to see the syscall name\n""\x1b[0m");
     }
