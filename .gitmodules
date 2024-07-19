@@ -1,7 +1,7 @@
-[submodule "volatility3"]
+[submodule "memory_dump_analyzer/volatility3"]
 	path = memory_dump_analyzer/volatility3
 	url = https://github.com/volatilityfoundation/volatility3
-[submodule "LiME"]
+[submodule "memory_dump_analyzer/LiME"]
 	path = memory_dump_analyzer/LiME
 	url = https://github.com/504ensicsLabs/LiME
 [submodule "bpf-defender/blazesym"]
